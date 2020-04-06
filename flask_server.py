@@ -23,19 +23,10 @@ CONFIG = {
 }
 
 
-humidity = []
-temperature = []
-gas = []
-count = 0
-
 
 ##------------------------------------------------------------------------------##
 ##__________________________utility functions______________________
 
-def get_image(np_byte, img_size = (300,300,3)):
-    img = np.frombuffer(np_byte, dtype = np.uint8)
-    img = img.reshape(img_size[0],img_size[1], img_size[2])
-    return img
 
 
 def logincheck(u_email, u_pass):
@@ -82,21 +73,16 @@ def update_db(user_dict):
 def home():
     return render_template('login.html')
 
-@app.route('/index_test')
-def index_test():
-    return render_template('index.html')
 
 @app.route('/login_page')
 def login_page():
     return render_template('login.html')
 
-@app.route('/forgotpass_page')
-def forgotpass_page():
-    return render_template('forgotpass.html')
 
-@app.route('/accounts_page')
+
+@app.route('/signup_page')
 def accounts_page():
-    return render_template('accounts.html')
+    return render_template('signup.html')
 
 
 @app.route('/account_details_page')
@@ -123,7 +109,6 @@ def index_page():
 
 
 
-
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
@@ -133,14 +118,6 @@ def logout():
     print(session)
     return render_template('login.html')
 
-
-@app.route("/forgotpassword", methods = ['POST'])
-def forgotpassword():
-    email = request.form['email']
-    fb_pyre = pyrebase.initialize_app(CONFIG)
-    auth = fb_pyre.auth()
-    auth.send_password_reset_email(email)
-    return render_template('forgotpass.html')
 
 
 
@@ -183,27 +160,6 @@ def signup():
         flash(msg)
         print(msg)
         return render_template('signup.html')
-
-
-@app.route('/account_det')
-def account_detail():
-    if 'username' in session:
-        udict = {}
-        fb = firebase.FirebaseApplication('https://firebird-7ef02.firebaseio.com/')
-        email = session['username']
-        res = hashlib.sha256(email.encode())
-        sha_email = res.hexdigest()
-        result = fb.get('/{}'.format(sha_email), None)
-        result = list(result.values())[0]
-        udict['username'] = result['email']
-        udict['name'] = result['name']
-        udict['title'] = result['title']
-        udict['filename'] = '{}.png'.format(udict['name'])
-        cv2.imwrite(os.path.join('static', 'temp', '{}.png'.format(udict['name'])), np.asarray(result['photo']))
-        return render_template('account_details.html', user_info = udict)
-    else:
-        print('please login')
-        return render_template('login.html')
 
 
 
