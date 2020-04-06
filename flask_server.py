@@ -6,7 +6,9 @@ import os
 import time
 import cv2
 import numpy as np
+import pandas as pd
 
+review_data = pd.read_csv('new.csv')
 
 
 app = Flask(__name__)
@@ -27,7 +29,22 @@ CONFIG = {
 ##------------------------------------------------------------------------------##
 ##__________________________utility functions______________________
 
-
+def get_data(pro):
+    hotels = []
+    data_subset = review_data[review_data['province'] == pro]
+    for name in list(set(data_subset['name'])):
+        print(name)
+        hdict = {}
+        hotel_subset = data_subset[data_subset['name'] == name]
+        hdict['name'] = name
+        hdict['reviews'] = list(hotel_subset['reviews.text'])
+        hdict['review_user'] = list(hotel_subset['reviews.username'])
+        hdict['rating'] = list(hotel_subset['reviews.rating'])
+        hdict['city'] = list(hotel_subset['city'])[0]
+        hdict['category'] = list(hotel_subset['categories'])[0]
+        hdict['address'] = list(hotel_subset['address'])[0]
+        hotels.append(hdict)
+    return hotels
 
 def logincheck(u_email, u_pass):
     fb_pyre = pyrebase.initialize_app(CONFIG)
@@ -105,6 +122,32 @@ def index_page():
 
 
 ##________________functional API________________________
+
+@app.route("/review_MN")
+def review_MN():
+    data = get_data('MN')
+    return render_template('review_page.html', hotels_info = data)
+
+@app.route("/review_NC")
+def review_NC():
+    data = get_data('NC')
+    return render_template('review_page.html', hotels_info = data)
+
+@app.route("/review_WI")
+def review_WI():
+    data = get_data('WI')
+    return render_template('review_page.html', hotels_info = data)
+
+@app.route("/review_CT")
+def review_CT():
+    data = get_data('CT')
+    return render_template('review_page.html', hotels_info = data)
+
+@app.route("/review_VA")
+def review_VA():
+    data = get_data('VA')
+    return render_template('review_page.html', hotels_info = data)
+
 
 
 
