@@ -98,6 +98,7 @@ def forgotpass_page():
 def accounts_page():
     return render_template('accounts.html')
 
+
 @app.route('/account_details_page')
 def account_details_page():
     if 'username' in session:
@@ -105,6 +106,7 @@ def account_details_page():
     else:
         print('Please Login')
         return render_template('login.html')
+
 
 @app.route('/index_page')
 def index_page():
@@ -119,32 +121,7 @@ def index_page():
 ##________________functional API________________________
 
 
-@app.route('/ard', methods = ['POST'])
-def dht_humid():
-    content = request.get_json()
-    humidity.append(content['humid'][0])
-    temperature.append(content['temperature'][0])
-    gas.append(content['gas'][0])
-    print(content)
-    return 'JSON posted'
 
-@app.route('/data')
-def dht_response():
-    global count
-    response = []
-    while len(humidity) == 0:
-        time.sleep(1)
-    if len(humidity) != 0:
-        htemp = humidity.pop(0)
-        ttemp = temperature.pop(0)
-        gtemp = gas.pop(0)
-        response.append(count)
-        response.append(ttemp)
-        response.append(htemp)
-        response.append(gtemp)
-        count += 1
-        print(response)
-        return jsonify(response)
 
 
 @app.route("/logout")
@@ -170,7 +147,7 @@ def forgotpassword():
 @app.route("/login", methods = ['POST'])
 def login():
     email = request.form['email']
-    password = request.form['password']
+    password = request.form['pass']
     valid = logincheck(email, password)
     if valid:
         session['logged_in'] = True
@@ -187,15 +164,9 @@ def login():
 @app.route("/signup", methods = ['POST'])
 def signup():
     user = {}
-    temp = request.files['file']
-    temp.save(os.path.join('static', 'temp', 'temp.png'))
-    temp = cv2.imread(os.path.join('static', 'temp','temp.png'))
-    temp = cv2.resize(temp, (300,300))
-    user['photo'] = temp.tolist()
     user['name'] = request.form['name']
     user['email'] = request.form['email']
-    user['title'] = request.form['title']
-    user['password'] = request.form['password']
+    user['password'] = request.form['pass']
     valid, msg = signupcheck(user)
     print(valid, msg)
     if valid:
@@ -207,11 +178,11 @@ def signup():
         else:
             flash('Error in creating profile')
             print('Error in creating profile')
-            return render_template('accounts.html')
+            return render_template('signup.html')
     else:
         flash(msg)
         print(msg)
-        return render_template('accounts.html')
+        return render_template('signup.html')
 
 
 @app.route('/account_det')
@@ -236,10 +207,6 @@ def account_detail():
 
 
 
-
-@app.route('/hello')
-def hello():
-    return 'It is working'
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(100)
