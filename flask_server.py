@@ -36,22 +36,34 @@ def get_data(pro):
         hdict = {}
         hotel_subset = data_subset[data_subset['Restaurant Name'] == name]
         hdict['Restaurant Name'] = name
-        hdict['Reviews'] = list(hotel_subset['Reviews'])
-        hdict['User_email'] = list(hotel_subset['User_email'])
-        hdict['Has Table booking'] = list(hotel_subset['Has Table booking'])[0]
-        hdict['Average Cost for two'] = list(hotel_subset['Average Cost for two'])[0]
-        hdict['Category'] = list(hotel_subset['Category'])[0]
         hdict['Address'] = list(hotel_subset['Address'])[0]
-        hdict['Cuisines'] = list(hotel_subset['Cuisines'])[0]
-        hdict['Has Online delivery'] = list(hotel_subset['Has Online delivery'])[0]
-        hdict['Aggregate rating'] = list(hotel_subset['Aggregate rating'])[0]
         hdict['Rating text'] = list(hotel_subset['Rating text'])[0]
-        hdict['Votes'] = list(hotel_subset['Votes'])[0]
-        hdict['image'] = cv2.imread(os.path.join('static','res_images', name + '.png'))
         hdict['image_name'] = os.path.join('res_images', name + '.png')
         print(hdict['image_name'])
         hotels.append(hdict)
     return hotels
+
+
+def get_data_single(res):
+    hdict = {}
+    hotel_subset = review_data[review_data['Restaurant Name'] == res]
+    hdict['Restaurant Name'] = res
+    hdict['Reviews'] = list(hotel_subset['Reviews'])
+    hdict['User_email'] = list(hotel_subset['User_email'])
+    hdict['Has Table booking'] = list(hotel_subset['Has Table booking'])[0]
+    hdict['Average Cost for two'] = list(hotel_subset['Average Cost for two'])[0]
+    hdict['Category'] = list(hotel_subset['Category'])[0]
+    hdict['Address'] = list(hotel_subset['Address'])[0]
+    hdict['Cuisines'] = list(hotel_subset['Cuisines'])[0]
+    hdict['Has Online delivery'] = list(hotel_subset['Has Online delivery'])[0]
+    hdict['Aggregate rating'] = list(hotel_subset['Aggregate rating'])[0]
+    hdict['Rating text'] = list(hotel_subset['Rating text'])[0]
+    hdict['Votes'] = list(hotel_subset['Votes'])[0]
+    # hdict['image'] = cv2.imread(os.path.join('static','res_images', name + '.png'))
+    hdict['image_name'] = os.path.join('res_images', name + '.png')
+    return hdict
+
+
 
 def logincheck(u_email, u_pass):
     fb_pyre = pyrebase.initialize_app(CONFIG)
@@ -177,6 +189,15 @@ def review_NY():
         print('Please Login')
         return render_template('login.html')
 
+
+@app.route("/show_info")
+def show_info():
+    if 'username' in session:
+        res = request.form['name']
+        data = get_data_single(res)
+        return render_template('show_info.html', restaurant_name = data)
+    else:
+        return render_template('login.html')
 
 
 
