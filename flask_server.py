@@ -129,35 +129,35 @@ def index_page():
 
 ##________________functional API________________________
 
-@app.route("/review_1")
+@app.route("/bestofmumbai")
 def review_MN():
     data = get_data(1)
-    return render_template('review_page.html', rows = data)
+    return render_template('bestofmumbai.html', rows = data)
 
-@app.route("/review_2")
+@app.route("/alldaycafe")
 def review_NC():
     data = get_data(2)
-    return render_template('review_page.html', rows = data)
+    return render_template('alldaycafe.html', rows = data)
 
-@app.route("/review_3")
+@app.route("/kebabs")
 def review_WI():
     data = get_data(3)
-    return render_template('review_page.html', rows = data)
+    return render_template('kebabs.html', rows = data)
 
-@app.route("/review_4")
+@app.route("/oldisgold")
 def review_CT():
     data = get_data(4)
-    return render_template('review_page.html', rows = data)
+    return render_template('oldisgold.html', rows = data)
 
-@app.route("/review_5")
+@app.route("/corporate")
 def review_VA():
     data = get_data(5)
-    return render_template('review_page.html', rows = data)
+    return render_template('corporate.html', rows = data)
 
-@app.route("/review_6")
+@app.route("/streetsavy")
 def review_NY():
     data = get_data(6)
-    return render_template('review_page.html', rows = data)
+    return render_template('streetsavy.html', rows = data)
 
 
 
