@@ -47,8 +47,8 @@ def get_data(pro):
         hdict['Aggregate rating'] = list(hotel_subset['Aggregate rating'])[0]
         hdict['Rating text'] = list(hotel_subset['Rating text'])[0]
         hdict['Votes'] = list(hotel_subset['Votes'])[0]
-        hdict['image'] = cv2.imread(os.path.join('images', name + '.png'))
-        hdict['image_name'] = os.path.join('images', name + '.png')
+        hdict['image'] = cv2.imread(os.path.join('static','res_images', name + '.png'))
+        hdict['image_name'] = os.path.join('res_images', name + '.png')
         print(hdict['image_name'])
         hotels.append(hdict)
     return hotels
