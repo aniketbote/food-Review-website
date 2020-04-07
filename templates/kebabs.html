@@ -73,14 +73,14 @@
     <!-- Project One -->
     <div class="row">
       <div class="col-md-7">
-        <a href="/restaurant/{{row["id"]}}">
-          <img class="img-fluid rounded mb-3 mb-md-0" src="{{row["iamge"]}}" alt="">
-        </a>
+       
+          <img class="img-fluid rounded mb-3 mb-md-0" src="{{ 'static/{}'.format(row['image_name']) }}" alt="">
+        
       </div>
       <div class="col-md-5">
-        <h3>{{row["name"]}}</h3>
-        <p>{{row["address"]}}</p>
-        <p>{{row["email"]}}</p>
+        <h3>{{row["Restaurant Name"]}}</h3>
+        <p>{{row["Address"]}}</p>
+        <p>{{row["Restaurant text"]}}</p>
         <a class="btn btn-primary" href="#">View Restaurant
           <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
