@@ -39,7 +39,7 @@ def get_data(pro):
         hdict['Address'] = list(hotel_subset['Address'])[0]
         hdict['Rating text'] = list(hotel_subset['Rating text'])[0]
         hdict['image_name'] = os.path.join('res_images', name + '.png')
-        print(hdict['image_name'])
+        # print(hdict['image_name'])
         hotels.append(hdict)
     return hotels
 
@@ -60,7 +60,7 @@ def get_data_single(res):
     hdict['Rating text'] = list(hotel_subset['Rating text'])[0]
     hdict['Votes'] = list(hotel_subset['Votes'])[0]
     # hdict['image'] = cv2.imread(os.path.join('static','res_images', name + '.png'))
-    hdict['image_name'] = os.path.join('res_images', name + '.png')
+    hdict['image_name'] = os.path.join('res_images', res + '.png')
     return hdict
 
 
@@ -190,12 +190,13 @@ def review_NY():
         return render_template('login.html')
 
 
-@app.route("/show_info")
+@app.route("/show_info",methods=["POST"])
 def show_info():
     if 'username' in session:
-        res = request.form['name']
+        res = request.form['res_name']
+        print(res)
         data = get_data_single(res)
-        return render_template('show_info.html', restaurant_name = data)
+        return render_template('show_info.html', data = data)
     else:
         return render_template('login.html')
 

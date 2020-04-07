@@ -81,9 +81,9 @@
         <h3>{{row["Restaurant Name"]}}</h3>
         <p>{{row["Address"]}}</p>
         <p>{{row["Restaurant text"]}}</p>
-        <a class="btn btn-primary" href="/show_info/<row['Restaurant Name']>">View Restaurant
-          <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
+        <form action="/show_info" method="POST"><button type="submit" name="res_name" class=" btn-primary " value="{{row['Restaurant Name']}}">View Restaurant</button></form>
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </form>
       </div>
     </div>
     <!-- /.row -->

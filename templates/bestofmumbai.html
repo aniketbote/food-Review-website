@@ -64,7 +64,7 @@
 
     <ol class="breadcrumb bg-dark">
       <li class="breadcrumb-item text-success">
-        <a href="index.html">Home</a>
+        <a href="/">Home</a>
       </li>
       <li class="breadcrumb-item active text-success">Best of Mumbai</li>
     </ol>
@@ -80,9 +80,8 @@
         <h3>{{row["Restaurant Name"]}}</h3>
         <p>{{row["Address"]}}</p>
         <p>{{row["Rating text"]}}</p>
-        <form action="/show" method="POST"><button name="res_name" class="btn btn-primary btn-" value="{{row['Restaurant Name']}}">View Restaurant</button>
+        <form action="/show_info" method="POST"><button type="submit" name="res_name" class=" btn-primary " value="{{row['Restaurant Name']}}">View Restaurant</button></form>
           <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
         </form>
       </div>
     </div>
