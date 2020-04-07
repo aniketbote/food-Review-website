@@ -33,7 +33,6 @@ def get_data(pro):
     hotels = []
     data_subset = review_data[review_data['Category'] == pro]
     for name in list(set(data_subset['Restaurant Name'])):
-        print(name)
         hdict = {}
         hotel_subset = data_subset[data_subset['Restaurant Name'] == name]
         hdict['Restaurant Name'] = name
@@ -49,6 +48,8 @@ def get_data(pro):
         hdict['Rating text'] = list(hotel_subset['Rating text'])[0]
         hdict['Votes'] = list(hotel_subset['Votes'])[0]
         hdict['image'] = cv2.imread(os.path.join('images', name + '.png'))
+        hdict['image_name'] = os.path.join('images', name + '.png')
+        print(hdict['image_name'])
         hotels.append(hdict)
     return hotels
 
@@ -94,36 +95,29 @@ def update_db(user_dict):
 ##__________________pages__________________________
 @app.route('/')
 def home():
-    return render_template('login.html')
+    if 'username' in session:
+        return render_template('index_loggedin.html', username = session['username'])
+    else:
+        return render_template('index.html')
+
 
 
 @app.route('/login_page')
 def login_page():
-    return render_template('login.html')
+    if 'username' in session:
+        return render_template('index_loggedin.html', username = session['username'])
+    else:
+        return render_template('login.html')
 
 
 
 @app.route('/signup_page')
 def accounts_page():
-    return render_template('signup.html')
-
-
-@app.route('/account_details_page')
-def account_details_page():
     if 'username' in session:
-        return render_template('account_details.html')
+        return render_template('index_loggedin.html', username = session['username'])
     else:
-        print('Please Login')
-        return render_template('login.html')
+        return render_template('signup.html')
 
-
-@app.route('/index_page')
-def index_page():
-    if 'username' in session:
-        return render_template('index.html')
-    else:
-        print('Please Login')
-        return render_template('login.html')
 
 
 
@@ -131,33 +125,57 @@ def index_page():
 
 @app.route("/bestofmumbai")
 def review_MN():
-    data = get_data(1)
-    return render_template('bestofmumbai.html', rows = data)
+    if 'username' in session:
+        data = get_data(1)
+        return render_template('bestofmumbai.html', rows = data, username = session['username'])
+    else:
+        print('Please Login')
+        return render_template('login.html')
 
 @app.route("/alldaycafe")
 def review_NC():
-    data = get_data(2)
-    return render_template('alldaycafe.html', rows = data)
+    if 'username' in session:
+        data = get_data(2)
+        return render_template('alldaycafe.html', rows = data, username = session['username'])
+    else:
+        print('Please Login')
+        return render_template('login.html')
 
 @app.route("/kebabs")
 def review_WI():
-    data = get_data(3)
-    return render_template('kebabs.html', rows = data)
+    if 'username' in session:
+        data = get_data(3)
+        return render_template('kebabs.html', rows = data, username = session['username'])
+    else:
+        print('Please Login')
+        return render_template('login.html')
 
 @app.route("/oldisgold")
 def review_CT():
-    data = get_data(4)
-    return render_template('oldisgold.html', rows = data)
+    if 'username' in session:
+        data = get_data(4)
+        return render_template('oldisgold.html', rows = data, username = session['username'])
+    else:
+        print('Please Login')
+        return render_template('login.html')
 
 @app.route("/corporate")
 def review_VA():
-    data = get_data(5)
-    return render_template('corporate.html', rows = data)
+    if 'username' in session:
+        data = get_data(5)
+        return render_template('corporate.html', rows = data, username = session['username'])
+    else:
+        print('Please Login')
+        return render_template('login.html')
 
 @app.route("/streetsavy")
 def review_NY():
-    data = get_data(6)
-    return render_template('streetsavy.html', rows = data)
+    if 'username' in session:
+        data = get_data(6)
+        return render_template('streetsavy.html', rows = data, username = session['username'])
+    else:
+        print('Please Login')
+        return render_template('login.html')
 
 
 
@@ -170,7 +188,7 @@ def logout():
     for fname in os.listdir(os.path.join('static', 'temp')):
         os.remove(os.path.join('static', 'temp', fname))
     print(session)
-    return render_template('login.html')
+    return render_template('index.html')
 
 
 
@@ -184,7 +202,7 @@ def login():
         session['logged_in'] = True
         session['username'] = email
         print(session)
-        return render_template('index.html')
+        return render_template('index_loggedin.html', username = session['username'])
     else:
         flash('Incorrect Username or Password')
         print('Incorrect Username or Password')
