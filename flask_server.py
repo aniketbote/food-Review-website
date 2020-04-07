@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 import pandas as pd
 
-review_data = pd.read_csv('new.csv')
+review_data = pd.read_csv('new1.csv')
 
 
 app = Flask(__name__)
@@ -31,18 +31,24 @@ CONFIG = {
 
 def get_data(pro):
     hotels = []
-    data_subset = review_data[review_data['province'] == pro]
-    for name in list(set(data_subset['name'])):
+    data_subset = review_data[review_data['Category'] == pro]
+    for name in list(set(data_subset['Restaurant Name'])):
         print(name)
         hdict = {}
-        hotel_subset = data_subset[data_subset['name'] == name]
-        hdict['name'] = name
-        hdict['reviews'] = list(hotel_subset['reviews.text'])
-        hdict['review_user'] = list(hotel_subset['reviews.username'])
-        hdict['rating'] = list(hotel_subset['reviews.rating'])
-        hdict['city'] = list(hotel_subset['city'])[0]
-        hdict['category'] = list(hotel_subset['categories'])[0]
-        hdict['address'] = list(hotel_subset['address'])[0]
+        hotel_subset = data_subset[data_subset['Restaurant Name'] == name]
+        hdict['Restaurant Name'] = name
+        hdict['Reviews'] = list(hotel_subset['Reviews'])
+        hdict['User_email'] = list(hotel_subset['User_email'])
+        hdict['Has Table booking'] = list(hotel_subset['Has Table booking'])[0]
+        hdict['Average Cost for two'] = list(hotel_subset['Average Cost for two'])[0]
+        hdict['Category'] = list(hotel_subset['Category'])[0]
+        hdict['Address'] = list(hotel_subset['Address'])[0]
+        hdict['Cuisines'] = list(hotel_subset['Cuisines'])[0]
+        hdict['Has Online delivery'] = list(hotel_subset['Has Online delivery'])[0]
+        hdict['Aggregate rating'] = list(hotel_subset['Aggregate rating'])[0]
+        hdict['Rating text'] = list(hotel_subset['Rating text'])[0]
+        hdict['Votes'] = list(hotel_subset['Votes'])[0]
+        hdict['image'] = cv2.imread(os.path.join('images', name + '.png'))
         hotels.append(hdict)
     return hotels
 
@@ -123,30 +129,35 @@ def index_page():
 
 ##________________functional API________________________
 
-@app.route("/review_MN")
+@app.route("/review_1")
 def review_MN():
-    data = get_data('MN')
-    return render_template('review_page.html', hotels_info = data)
+    data = get_data(1)
+    return render_template('review_page.html', rows = data)
 
-@app.route("/review_NC")
+@app.route("/review_2")
 def review_NC():
-    data = get_data('NC')
-    return render_template('review_page.html', hotels_info = data)
+    data = get_data(2)
+    return render_template('review_page.html', rows = data)
 
-@app.route("/review_WI")
+@app.route("/review_3")
 def review_WI():
-    data = get_data('WI')
-    return render_template('review_page.html', hotels_info = data)
+    data = get_data(3)
+    return render_template('review_page.html', rows = data)
 
-@app.route("/review_CT")
+@app.route("/review_4")
 def review_CT():
-    data = get_data('CT')
-    return render_template('review_page.html', hotels_info = data)
+    data = get_data(4)
+    return render_template('review_page.html', rows = data)
 
-@app.route("/review_VA")
+@app.route("/review_5")
 def review_VA():
-    data = get_data('VA')
-    return render_template('review_page.html', hotels_info = data)
+    data = get_data(5)
+    return render_template('review_page.html', rows = data)
+
+@app.route("/review_6")
+def review_NY():
+    data = get_data(6)
+    return render_template('review_page.html', rows = data)
 
 
 

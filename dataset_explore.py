@@ -1,33 +1,72 @@
 import pandas as pd
-review_data = pd.read_csv('new.csv')
-print(set(review_data['province']))
+import os
+import cv2
+review_data = pd.read_csv('new1.csv',encoding= 'utf-8')
+# res_name = list((set(review_data['Restaurant Name'])))
+
+# for n,res in zip(list(os.listdir('images')),res_name):
+#     n = os.path.join('images',n)
+#     temp = res + '.png'
+#     temp = os.path.join('images',temp)
+#     os.rename(n,temp)
+
+
 def get_data(pro):
     hotels = []
-    data_subset = review_data[review_data['province'] == pro]
-    for name in list(set(data_subset['name'])):
+    data_subset = review_data[review_data['Category'] == pro]
+    for name in list(set(data_subset['Restaurant Name'])):
         print(name)
         hdict = {}
-        hotel_subset = data_subset[data_subset['name'] == name]
-        hdict['name'] = name
-        hdict['reviews'] = list(hotel_subset['reviews.text'])
-        hdict['review_user'] = list(hotel_subset['reviews.username'])
-        hdict['rating'] = list(hotel_subset['reviews.rating'])
-        hdict['city'] = list(hotel_subset['city'])[0]
-        hdict['category'] = list(hotel_subset['categories'])[0]
-        hdict['address'] = list(hotel_subset['address'])[0]
+        hotel_subset = data_subset[data_subset['Restaurant Name'] == name]
+        hdict['Restaurant Name'] = name
+        hdict['Reviews'] = list(hotel_subset['Reviews'])
+        hdict['User_email'] = list(hotel_subset['User_email'])
+        hdict['Has Table booking'] = list(hotel_subset['Has Table booking'])[0]
+        hdict['Average Cost for two'] = list(hotel_subset['Average Cost for two'])[0]
+        hdict['Category'] = list(hotel_subset['Category'])[0]
+        hdict['Address'] = list(hotel_subset['Address'])[0]
+        hdict['Cuisines'] = list(hotel_subset['Cuisines'])[0]
+        hdict['Has Online delivery'] = list(hotel_subset['Has Online delivery'])[0]
+        hdict['Aggregate rating'] = list(hotel_subset['Aggregate rating'])[0]
+        hdict['Rating text'] = list(hotel_subset['Rating text'])[0]
+        hdict['Votes'] = list(hotel_subset['Votes'])[0]
+        hdict['image'] = cv2.imread(os.path.join('images',name + '.png'))
         hotels.append(hdict)
     return hotels
 
-data = get_data('VA')
+data = get_data(1)
 print(len(data))
+
+
+
+
+
+
+
+
+
+
+
+
+# review_data = review_data.dropna()
+# review_data = review_data.drop(['url','online_order','book_table','votes','menu_item'],axis = 1)
+# hotels = list(set(list(review_data['name'])))
+# fin = hotels[100:150]
+# bool = review_data['name'].isin(fin)
+# review_data1 = review_data[bool]
+# review_data = review_data[pd.to_numeric(review_data['id'], errors='coerce').notnull()]
+# review_data = review_data.dropna()
+# review_data.to_csv('new3.csv')
+
+#
+
+# print(len(data))
 # fin = []
 # for h in hello:
 #     if len(h) == 2:
 #         fin.append(h)
 #
 # fin = fin[11:16]
-# bool = review_data['province'].isin(fin)
-# review_data1 = review_data[bool]
 # print(len(set(review_data1['name'])))
 
 # review_data1.to_csv('new.csv')
