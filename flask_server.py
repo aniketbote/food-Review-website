@@ -128,6 +128,20 @@ def login_page():
     else:
         return render_template('login.html')
 
+@app.route('/about')
+def about_page():
+    if 'username' in session:
+        return render_template('about_loggedin.html', username = session['username'])
+    else:
+        return render_template('about.html')
+
+@app.route('/contact')
+def contact_page():
+    if 'username' in session:
+        return render_template('contact_loggedin.html', username = session['username'])
+    else:
+        return render_template('contact.html')
+
 
 
 @app.route('/signup_page')
