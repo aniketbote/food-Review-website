@@ -29,10 +29,10 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="about.html">About</a>
+              <a class="nav-link" href="/about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact</a>
+              <a class="nav-link" href="/contact">Contact</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,7 +80,7 @@
         <h3>{{row["Restaurant Name"]}}</h3>
         <p>{{row["Address"]}}</p>
         <p>{{row["Rating text"]}}</p>
-        <form action="/show_info" method="POST"><button type="submit" name="res_name" class=" btn-primary " value="{{row['Restaurant Name']}}">View Restaurant</button></form>
+        <form action="/show_info" method="POST"><button type="submit" name="res_name" class=" btn btn-outline-info" value="{{row['Restaurant Name']}}">View Restaurant</button></form>
           <span class="glyphicon glyphicon-chevron-right"></span>
         </form>
       </div>
