@@ -1,8 +1,9 @@
 import pandas as pd
 import os
 import cv2
-review_data = pd.read_csv('new1.csv',encoding= 'utf-8')
-res_name = list((set(review_data['Restaurant Name'])))
+import random
+review_data = pd.read_csv('new2.csv',encoding= 'utf-8')
+# res_name = list((set(review_data['Restaurant Name'])))
 
 # for n,res in zip(list(os.listdir('images')),res_name):
 #     n = os.path.join('images',n)
@@ -12,28 +13,32 @@ res_name = list((set(review_data['Restaurant Name'])))
 
 
 def get_data_single(res):
+    global review_data
     hdict = {}
+    res = res
+    hdict['Reviews'] = "Lol1"
     hotel_subset = review_data[review_data['Restaurant Name'] == res]
+    hdict['Restaurant ID'] = list(hotel_subset['Restaurant ID'])[0]
     hdict['Restaurant Name'] = res
-    hdict['Reviews'] = list(hotel_subset['Reviews'])
-    hdict['User_email'] = list(hotel_subset['User_email'])
-    hdict['Has Table booking'] = list(hotel_subset['Has Table booking'])[0]
-    hdict['Average Cost for two'] = list(hotel_subset['Average Cost for two'])[0]
-    hdict['Category'] = list(hotel_subset['Category'])[0]
     hdict['Address'] = list(hotel_subset['Address'])[0]
     hdict['Cuisines'] = list(hotel_subset['Cuisines'])[0]
+    hdict['Average Cost for two'] = list(hotel_subset['Average Cost for two'])[0]
+    hdict['Has Table booking'] = list(hotel_subset['Has Table booking'])[0]
     hdict['Has Online delivery'] = list(hotel_subset['Has Online delivery'])[0]
     hdict['Aggregate rating'] = list(hotel_subset['Aggregate rating'])[0]
     hdict['Rating text'] = list(hotel_subset['Rating text'])[0]
     hdict['Votes'] = list(hotel_subset['Votes'])[0]
-    # hdict['image'] = cv2.imread(os.path.join('static','res_images', name + '.png'))
-    hdict['image_name'] = os.path.join('res_images', res + '.png')
-    return hdict
-count = 0
-data = get_data_single("Balay Dako")
-for i in range(len(data['Reviews'])):
-    print(data['Reviews'][i])
-    print(data['User_email'][i])
+    hdict['Category'] = list(hotel_subset['Category'])[0]
+    hdict['User_email'] = 'lol1'
+    review_data = review_data.append(hdict, ignore_index = True)
+    review_data.to_csv('new2.csv', index = False)
+
+
+get_data_single("Balay Dako")
+
+# for i in range(len(data['Reviews'])):
+#     print(data['Reviews'][i])
+#     print(data['User_email'][i])
 
 
 
