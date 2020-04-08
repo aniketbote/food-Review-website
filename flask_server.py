@@ -8,7 +8,11 @@ import cv2
 import numpy as np
 import pandas as pd
 
-review_data = pd.read_csv('new1.csv')
+def read_data():
+    global review_data
+    review_data = pd.read_csv('new1.csv')
+
+read_data()
 
 
 app = Flask(__name__)
@@ -29,7 +33,11 @@ CONFIG = {
 ##------------------------------------------------------------------------------##
 ##__________________________utility functions______________________
 
+
+
+
 def get_data(pro):
+    global review_data
     hotels = []
     data_subset = review_data[review_data['Category'] == pro]
     for name in list(set(data_subset['Restaurant Name'])):
@@ -45,6 +53,7 @@ def get_data(pro):
 
 
 def get_data_single(res):
+    global review_data
     hdict = {}
     hotel_subset = review_data[review_data['Restaurant Name'] == res]
     hdict['Restaurant Name'] = res
@@ -220,7 +229,7 @@ def show_info():
         res = request.form['res_name']
         print(res)
         data = get_data_single(res)
-        return render_template('show_info.html', data = data)
+        return render_template('show_info.html', data = data, username = session['username'])
     else:
         return render_template('login.html')
 
@@ -253,6 +262,33 @@ def login():
         flash('Incorrect Username or Password')
         print('Incorrect Username or Password')
         return render_template('login.html')
+
+
+@app.route("/comment", methods = ['POST'])
+def comment():
+    global review_data
+    hdict = {}
+    res = request.form['Restaurant Name']
+    hdict['Reviews'] = request.form['Reviews']
+    hotel_subset = review_data[review_data['Restaurant Name'] == res]
+    hdict['Restaurant ID'] = random.randint(1,999999)
+    hdict['Restaurant Name'] = res
+    hdict['Address'] = list(hotel_subset['Address'])[0]
+    hdict['Cuisines'] = list(hotel_subset['Cuisines'])[0]
+    hdict['Average Cost for two'] = list(hotel_subset['Average Cost for two'])[0]
+    hdict['Has Table booking'] = list(hotel_subset['Has Table booking'])[0]
+    hdict['Has Online delivery'] = list(hotel_subset['Has Online delivery'])[0]
+    hdict['Aggregate rating'] = list(hotel_subset['Aggregate rating'])[0]
+    hdict['Rating text'] = list(hotel_subset['Rating text'])[0]
+    hdict['Votes'] = list(hotel_subset['Votes'])[0]
+    hdict['Category'] = list(hotel_subset['Category'])[0]
+    hdict['User_email'] = session['username']
+    review_data = review_data.append(hdict, ignore_index = True)
+    review_data.to_csv('new1.csv')
+    data = get_data_single(res)
+    return render_template('show_info.html', data = data, username = session['username'])
+
+
 
 
 
