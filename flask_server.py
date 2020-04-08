@@ -104,7 +104,7 @@ def update_db(user_dict):
 
 
 ##------------------------------------------------------------------------------##
-##__________________pages__________________________
+##__________________pages_____________________________
 @app.route('/')
 def home():
     if 'username' in session:
@@ -118,6 +118,7 @@ def index_page():
         return render_template('index_loggedin.html', username = session['username'])
     else:
         return render_template('index.html')
+
 
 
 
