@@ -152,20 +152,6 @@ def accounts_page():
         return render_template('signup.html')
 
 
-@app.route('/about_page')
-def about_page():
-    if 'username' in session:
-        return render_template('about_loggedin.html', username = session['username'])
-    else:
-        return render_template('about.html')
-
-@app.route('/contact_page')
-def contact_page():
-    if 'username' in session:
-        return render_template('contact_loggedin.html', username = session['username'])
-    else:
-        return render_template('contact.html')
-
 
 
 
