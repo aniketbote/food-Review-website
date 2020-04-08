@@ -271,7 +271,7 @@ def comment():
     res = request.form['Restaurant Name']
     hdict['Reviews'] = request.form['Reviews']
     hotel_subset = review_data[review_data['Restaurant Name'] == res]
-    hdict['Restaurant ID'] = random.randint(1,999999)
+    hdict['Restaurant ID'] = list(hotel_subset['Restaurant ID'])[0]
     hdict['Restaurant Name'] = res
     hdict['Address'] = list(hotel_subset['Address'])[0]
     hdict['Cuisines'] = list(hotel_subset['Cuisines'])[0]
@@ -284,7 +284,7 @@ def comment():
     hdict['Category'] = list(hotel_subset['Category'])[0]
     hdict['User_email'] = session['username']
     review_data = review_data.append(hdict, ignore_index = True)
-    review_data.to_csv('new1.csv')
+    review_data.to_csv('new1.csv', index = False)
     data = get_data_single(res)
     return render_template('show_info.html', data = data, username = session['username'])
 
