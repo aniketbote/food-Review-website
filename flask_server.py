@@ -235,13 +235,10 @@ def show_info():
 
 
 
-
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
     session.pop('username')
-    for fname in os.listdir(os.path.join('static', 'temp')):
-        os.remove(os.path.join('static', 'temp', fname))
     print(session)
     return render_template('index.html')
 
@@ -270,6 +267,8 @@ def comment():
     hdict = {}
     res = request.form['Restaurant Name']
     hdict['Reviews'] = request.form['Reviews']
+    print(res)
+    print(hdict['Reviews'])
     hotel_subset = review_data[review_data['Restaurant Name'] == res]
     hdict['Restaurant ID'] = list(hotel_subset['Restaurant ID'])[0]
     hdict['Restaurant Name'] = res
@@ -286,6 +285,7 @@ def comment():
     review_data = review_data.append(hdict, ignore_index = True)
     review_data.to_csv('new1.csv', index = False)
     data = get_data_single(res)
+    print(data)
     return render_template('show_info.html', data = data, username = session['username'])
 
 

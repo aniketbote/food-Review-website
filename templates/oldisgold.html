@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Modern Business - Start Bootstrap Template</title>
+  <title>Old is Gold </title>
 
 <!-- Bootstrap core CSS -->
   <link href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -48,8 +48,13 @@
                 <a class="dropdown-item" href="/kebabs">Kebabs and Tandoor</a>
               </div>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="Login_v2/login.html">Log in</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{username}}
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                <a class="dropdown-item" href="/logout">Logout</a>
+              </div>
             </li>
           </ul>
         </div>
@@ -81,7 +86,7 @@
         <h3>{{row["Restaurant Name"]}}</h3>
         <p>{{row["Address"]}}</p>
         <p>{{row["Restaurant text"]}}</p>
-        <form action="/show_info" method="POST"><button type="submit" name="res_name" class=" btn-primary " value="{{row['Restaurant Name']}}">View Restaurant</button></form>
+        <form action="/show_info" method="POST"><button type="submit" name="res_name" class=" btn btn-outline-info " value="{{row['Restaurant Name']}}">View Restaurant</button></form>
         <span class="glyphicon glyphicon-chevron-right"></span>
       </form>
       </div>
@@ -94,29 +99,7 @@
     
 
     <!-- Pagination -->
-    <ul class="pagination justify-content-center">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-          <span class="sr-only">Previous</span>
-        </a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">1</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-          <span class="sr-only">Next</span>
-        </a>
-      </li>
-    </ul>
+
 
   </div>
   <!-- /.container -->
