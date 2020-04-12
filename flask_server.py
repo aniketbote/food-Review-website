@@ -8,12 +8,12 @@ import cv2
 import numpy as np
 import pandas as pd
 
-def read_data():
-    global review_data
-    review_data = pd.read_csv('new1.csv')
+def read_data(filename):
+    data = pd.read_csv(filename)
+    return data
 
-read_data()
-
+review_data = read_data('res_data.csv')
+user_data = read_data('user_message.csv')
 
 app = Flask(__name__)
 #configuration for firebase
@@ -237,8 +237,9 @@ def show_info():
 
 @app.route("/logout")
 def logout():
-    session['logged_in'] = False
-    session.pop('username')
+    if 'username' in session:
+        session['logged_in'] = False
+        session.pop('username')
     print(session)
     return render_template('index.html')
 
@@ -283,7 +284,7 @@ def comment():
     hdict['Category'] = list(hotel_subset['Category'])[0]
     hdict['User_email'] = session['username']
     review_data = review_data.append(hdict, ignore_index = True)
-    review_data.to_csv('new1.csv', index = False)
+    review_data.to_csv('res_data.csv', index = False)
     data = get_data_single(res)
     print(data)
     return render_template('show_info.html', data = data, username = session['username'])
@@ -315,6 +316,18 @@ def signup():
         print(msg)
         return render_template('signup.html')
 
+@app.route("/contactmsg", methods = ['POST'])
+def contact():
+    global user_data
+    user = {}
+    user['Name'] = request.form['fname']
+    user['Email'] = request.form['email']
+    user['Phone'] = request.form['pno']
+    user['Message'] = request.form['msg']
+    print(user)
+    user_data = user_data.append(user, ignore_index = True)
+    user_data.to_csv('user_message.csv', index = False)
+    return render_template('contact.html')
 
 
 
