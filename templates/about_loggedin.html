@@ -22,7 +22,7 @@
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-white">
-      <a class="navbar-brand" href="index.html" style="font-size: 30px ; padding-top: 15px"> <img src="{{ url_for('static',filename = 'Logo.png') }}" width="60" height="50" class="d-inline-block align-top" alt="">FoodView</a>
+      <a class="navbar-brand" href="/index_page" style="font-size: 30px ; padding-top: 15px"> <img src="{{ url_for('static',filename = 'Logo.png') }}" width="60" height="50" class="d-inline-block align-top" alt="">FoodView</a>
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -47,14 +47,19 @@
                   <a class="dropdown-item" href="/kebabs">Kebabs and Tandoor</a>
                 </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="Login_v2/login.html">{{username}}</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{username}}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                  <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
               </li>
             </ul>
           </div>
-    
+
       </nav>
-    
+
 
   <!-- Page Content -->
   <div class="container">
@@ -65,7 +70,7 @@
 
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="/index">Home</a>
+        <a href="/index_page">Home</a>
       </li>
       <li class="breadcrumb-item active">About</li>
     </ol>
@@ -73,13 +78,13 @@
     <!-- Intro Content -->
     <div class="row">
       <div class="col-lg-6">
-        <img class="img-fluid rounded mb-4" src="http://placehold.it/750x450" alt="">
+        <img class="img-fluid rounded mb-4" src="{{ url_for('static', filename='about-bg.jpg') }}" alt="">
       </div>
       <div class="col-lg-6">
         <h2>About FoodView</h2>
         <p>We're a group of Foodies , running around exploring the city to find the best for you.</p>
         <p>We provide reviews of restaurants from the foodies for the foodies!</p>
-        
+
       </div>
     </div>
     <!-- /.row -->
@@ -97,7 +102,7 @@
             <p class="card-text">Passionate about food in general .</p>
           </div>
           <div class="card-footer">
-            <a href="#">akshara.gadwe@gmail.com</a>
+            <a href="https://in.linkedin.com/in/akshara-gadwe-312999192">akshara.gadwe@gmail.com</a>
           </div>
         </div>
       </div>
@@ -110,7 +115,7 @@
             <p class="card-text">Swears by chicken , loves the buffet </p>
           </div>
           <div class="card-footer">
-            <a href="#">aniket.bote98@gmail.com</a>
+            <a href="https://in.linkedin.com/in/aniket-bote-8a59b315a">aniketbote2098@gmail.com</a>
           </div>
         </div>
       </div>
@@ -139,7 +144,7 @@
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+      <p class="m-0 text-center text-white">Copyright &copy; FoodView 2020</p>
     </div>
     <!-- /.container -->
   </footer>

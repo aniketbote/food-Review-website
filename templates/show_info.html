@@ -39,19 +39,24 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                 <a class="dropdown-item" href="/bestofmumbai">Best of Mumbai</a>
-                <a class="dropdown-item" href="/corporatel">Corporate Favourites</a>
+                <a class="dropdown-item" href="/corporate">Corporate Favourites</a>
                 <a class="dropdown-item" href="/alldaycafe">All Day Cafe</a>
                 <a class="dropdown-item" href="/streetsavy">Street Savy</a>
                 <a class="dropdown-item" href="/oldisgold">Old is Gold</a>
                 <a class="dropdown-item" href="/kebabs">Kebabs and Tandoor</a>
               </div>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="">{{username}}</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{username}}
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                <a class="dropdown-item" href="/logout">Logout</a>
+              </div>
             </li>
           </ul>
         </div>
-  
+
     </nav>
   <!-- Page Content -->
   <div class="container">
@@ -86,7 +91,7 @@
         <p class="lead">Cuisines Served : {{data['Cuisines']}}</p>
 
         <p class="lead">Table Booking Available : {{data['Has Table booking']}}</p>
-        
+
         <p class="lead">Online Delivery Available : {{data['Has Online delivery']}}</p>
 
 
@@ -114,19 +119,19 @@
         {% endfor %}
 
         <!-- Comment with nested comments -->
-        
 
-        
-        
+
+
+
 
       </div>
 
       <!-- Sidebar Widgets Column -->
-    
+
 
         <!-- Categories Widget -->
-        
-       
+
+
 
         <!-- Side Widget -->
 
@@ -141,7 +146,7 @@
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+      <p class="m-0 text-center text-white">Copyright &copy; FoodView 2020</p>
     </div>
     <!-- /.container -->
   </footer>
